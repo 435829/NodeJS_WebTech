@@ -45,19 +45,9 @@ console.log("test");
 //
 
 //Film object aangemaakt met verschillende variabelen
-    var film = new Schema({
-        imdb_number: Number,
-        titel: String,
-        datum: String,
-        lengte: Number,
-        regisseur: String,
-        beschrijving: String
-    });
+
 
 //User object aangemaakt met verschillende variabelen
-
-
-    var Film = mongoose.model('Film', film);
 
 
     var rating = new Schema({

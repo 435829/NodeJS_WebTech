@@ -11,6 +11,24 @@ var user = new Schema({
 });
 var User = mongoose.model('User', user);
 
+router.get('/:usernameR', function (req, res) {
+    var usernameRequest = req.param('usernameR');
+
+    User.find({username: usernameRequest}, function (err, users) {
+        var i = 0;
+        var userMap = {};
+
+        users.forEach(function(user) {
+            userMap[i] = user;
+            i++;
+        });
+
+        res.send(userMap);
+    });
+    // res.json("users");
+
+});
+
 router.get('/', function (req, res) {
     User.find({}, function (err, users) {
         var i = 0;
