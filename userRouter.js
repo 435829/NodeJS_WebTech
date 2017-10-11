@@ -13,20 +13,19 @@ var User = mongoose.model('User', user);
 
 router.get('/', function (req, res) {
     User.find({}, function (err, users) {
-        var userMap = {};
         var i = 0;
 
-        users.forEach(funtion(user){
-        {
+        var userMap = {};
+
+        users.forEach(function(user) {
             userMap[i] = user;
             i++;
-        }
+        });
 
         res.send(userMap);
     });
-    res.json("users");
+    // res.json("users");
 
-    console.log("Show all users")
 });
 
 module.exports = router;
