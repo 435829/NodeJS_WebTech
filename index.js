@@ -49,24 +49,21 @@ console.log("test");
         wachtwoord: String
     });
 
-// var rating = new Schema({
-//     sterren: Number,
-//     user: mongoose.Types.ObjectId(),
-//     film: mongoose.Types.ObjectId()
-// });
-
     var Film = mongoose.model('Film', film);
     var User = mongoose.model('User', user);
-// var Rating = mongoose.model('Rating', rating);
 
-// //Manier om methode aan te maken
-// film.statics.findByIMDB = function (imbd_number, cb) {
-//     return this.findByIMDB({imbd_number: new RegExp(imbd_number, 'i')}, cb);
-// };
-//
-// user.statics.findbyUsername = function (username, cb) {
-//     return this.findbyUsername({username: new RegExp(username, 'i')}, cb);
-// };
+
+    var rating = new Schema({
+        sterren: Number,
+        username: String,
+        imdb_number: Number
+    });
+
+
+
+
+    var Rating = mongoose.model('Rating', rating);
+
 
     var newFilm = new Film({
         imdb_nummer: 1234,
@@ -77,7 +74,13 @@ console.log("test");
         beschrijving: 'Leuke film'
     });
 
-    newFilm.save();
+    newFilm.save(function (err, result) {
+        if (err) {
+            return console.error(err);
+        } else {
+
+        }
+    });
 }
 
 
