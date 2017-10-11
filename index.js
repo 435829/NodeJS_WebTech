@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var userRouter = require('./userRouter.js');
+app.use('/api/users/', userRouter);
 
 var mongodbUri = "mongodb://Robinbolink:abcd12@ds163034.mlab.com:63034/robindb";
 var options = {
@@ -59,9 +61,6 @@ console.log("test");
         imdb_number: Number
     });
 
-
-
-
     var Rating = mongoose.model('Rating', rating);
 
 
@@ -81,6 +80,7 @@ console.log("test");
 
         }
     });
+
 }
 
 
