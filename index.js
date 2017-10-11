@@ -55,16 +55,9 @@ console.log("test");
     });
 
 //User object aangemaakt met verschillende variabelen
-    var user = new Schema({
-        achternaam: String,
-        tussenvoegsels: String,
-        voornaam: String,
-        username: String,
-        wachtwoord: String
-    });
+
 
     var Film = mongoose.model('Film', film);
-    var User = mongoose.model('User', user);
 
 
     var rating = new Schema({
