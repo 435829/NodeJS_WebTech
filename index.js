@@ -13,6 +13,9 @@ app.use('/api/ratings/', ratingRouter);
 //FILM ROUTER
 var filmRouter = require('./filmRouter.js');
 app.use('/api/films/', filmRouter);
+//AUTHENTICATION ROUTER
+var authRouter = require('./authentication');
+app.use('/api/login', authRouter);
 
 var mongodbUri = "mongodb://Robinbolink:abcd12@ds163034.mlab.com:63034/robindb";
 var options = {
@@ -108,96 +111,7 @@ console.log("test");
     // });
     // newFilm5.save();
     //
-    //
-    // var newUser1 = new User({
-    //     achternaam: 'Storm',
-    //     tussenvoegsels: 'van',
-    //     voornaam: 'Robert',
-    //     username: 'RobertStorm',
-    //     wachtwoord: 'test12'
-    // });
-    // newUser1.save();
-    //
-    // var newUser2 = new User({
-    //     achternaam: 'Bolink',
-    //     tussenvoegsels: 'niks',
-    //     voornaam: 'Robin',
-    //     username: 'RobinBolink',
-    //     wachtwoord: 'test12123123'
-    // });
-    // newUser2.save();
-    //
-    // var newUser3 = new User({
-    //     achternaam: 'Bruijn',
-    //     tussenvoegsels: 'de',
-    //     voornaam: 'Joran',
-    //     username: 'JorandeBruijn',
-    //     wachtwoord: 'bruintje'
-    // });
-    // newUser3.save();
-    //
-    // var newUser4 = new User({
-    //     achternaam: 'Hollegien',
-    //     tussenvoegsels: 'niks',
-    //     voornaam: 'David',
-    //     username: 'DavidHollegien',
-    //     wachtwoord: 'david'
-    // });
-    // newUser4.save();
-    //
-    // var newUser5 = new User({
-    //     achternaam: 'Vincent',
-    //     tussenvoegsels: 'van',
-    //     voornaam: 'Overvelde',
-    //     username: 'vinnie',
-    //     wachtwoord: 'aardbei'
-    // });
-    // newUser5.save();
-    //
-    // var newUser6 = new User({
-    //     achternaam: 'Scholten',
-    //     tussenvoegsels: 'van',
-    //     voornaam: 'Tim',
-    //     username: 'TimScholten',
-    //     wachtwoord: 'scholt'
-    // });
-    // newUser6.save();
-    //
-    // var newUser7 = new User({
-    //     achternaam: 'aardbei',
-    //     tussenvoegsels: 'van',
-    //     voornaam: 'banaan',
-    //     username: 'banenen',
-    //     wachtwoord: 'aardbei'
-    // });
-    // newUser7.save();
-    //
-    // var newUser8 = new User({
-    //     achternaam: 'Tafel',
-    //     tussenvoegsels: 'van',
-    //     voornaam: 'Stoel',
-    //     username: 'TafelMetStoel',
-    //     wachtwoord: 'tafelstoel'
-    // });
-    // newUser8.save();
-    //
-    // var newUser9 = new User({
-    //     achternaam: 'Bord',
-    //     tussenvoegsels: 'van',
-    //     voornaam: 'appel',
-    //     username: 'appelBord',
-    //     wachtwoord: 'peer'
-    // });
-    // newUser9.save();
-    //
-    // var newUser10 = new User({
-    //     achternaam: 'laptop',
-    //     tussenvoegsels: 'van',
-    //     voornaam: 'pc',
-    //     username: 'pcLaptop',
-    //     wachtwoord: 'lappie'
-    // });
-    // newUser10.save();
+
 
 }
 
