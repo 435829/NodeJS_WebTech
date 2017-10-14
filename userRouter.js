@@ -9,7 +9,12 @@ var user = new Schema({
     username: String,
     wachtwoord: String
 });
+
 var User = mongoose.model('User', user);
+
+User.prototype.checkPassword = function (user, password) {
+    return user.wachtwoord === password;
+};
 
 router.get('/:usernameR', function (req, res) {
     var usernameRequest = req.param('usernameR');
@@ -46,4 +51,6 @@ router.get('/', function (req, res) {
 
 });
 
-module.exports = router;
+
+module.exports.router = router;
+module.exports.User = User;

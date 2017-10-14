@@ -2,17 +2,23 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 //USER ROUTER
 var userRouter = require('./userRouter.js');
-app.use('/api/users/', userRouter);
+app.use('/api/users/', userRouter.router);
 //RATING ROUTER
 var ratingRouter = require('./ratingRouter.js');
 app.use('/api/ratings/', ratingRouter);
 //FILM ROUTER
 var filmRouter = require('./filmRouter.js');
 app.use('/api/films/', filmRouter);
+//AUTHENTICATION ROUTER
+var authRouter = require('./authentication');
+app.use('/api/login', authRouter);
 
 var mongodbUri = "mongodb://Robinbolink:abcd12@ds163034.mlab.com:63034/robindb";
 var options = {
