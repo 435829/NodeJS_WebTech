@@ -20,7 +20,7 @@ var User = mongoose.model('User', user);
 
 
 User.prototype.checkPassword = function (user, password) {
-    return user.password == password;
+    return user.wachtwoord === password;
 };
 
 User.prototype.findOneUser = function (username) {
