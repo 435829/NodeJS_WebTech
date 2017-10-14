@@ -19,22 +19,21 @@ var user = new Schema({
 var User = mongoose.model('User', user);
 
 
-User.prototype.checkPassword = function (user, password) {
+User.prototype.checkPassword = function (username, password) {
     return user.password == password;
 };
 
 User.prototype.findOneUser = function (username) {
     User.find({username: username}, function (err, users) {
         var i = 0;
-        var userMap = {};
+        var userToFind = null;
 
         users.forEach(function (user) {
             if (user.username === username){
-                userMap[i] = user;
+                userToFind = user;
             }
-            i++;
         });
-        res.send(userMap);
+        res.send(userToFind);
     });
 };
 
