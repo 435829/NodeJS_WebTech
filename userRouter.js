@@ -17,6 +17,46 @@ User.prototype.checkPassword = function (user, password) {
     return user.wachtwoord === password;
 };
 
+router.post('/register', function (req, res) {
+
+    var exists = false;
+    var usersList = [];
+
+    if (!req.body.username) {
+        res.status(400).send('Username required');
+        return;
+    }
+//Controleer of er een wachtwoord is ingevuld
+    if (!req.body.password) {
+        res.status(400).send('Password required');
+        return;
+    }
+    if (!req.body.achternaam) {
+        res.status(400).send('Last name required');
+        return;
+    }
+    if (!req.body.voornaam) {
+        res.status(400).send('First name required');
+        return;
+    }
+
+    User.findOne({username: req.body.username}, function (err, user) {
+        if (!user){
+            new User({
+                achternaam: req.body.achternaam,
+                tussenvoegsels: req.body.tussenvoegsel,
+                voornaam: req.body.voornaam,
+                username: req.body.username,
+                wachtwoord: req.body.password
+            }).save();
+
+            res.status(201); //Created
+        } else {
+            res.status(409).send('Username is already in use');
+        }
+    });
+});
+
 router.get('/:usernameR', function (req, res) {
     // verify a token symmetric
     var token = req.headers['authorization'];
@@ -36,6 +76,7 @@ router.get('/:usernameR', function (req, res) {
                     i++;
                 });
 
+                res.status(200);
                 res.send(userMap);
             });
             }
@@ -60,6 +101,7 @@ router.get('/', function (req, res) {
                     i++;
                 });
 
+                res.status(200);
                 res.send(userMap);
             });
             // res.json("users");

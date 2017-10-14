@@ -24,6 +24,7 @@ router.get('/', function (req, res) {
             i++;
         });
 
+        res.status(200);
         res.send(filmMap);
     });
     // res.json("films");
@@ -42,6 +43,7 @@ router.get('/:IMDB', function (req, res) {
             i++;
         });
 
+        res.status(200);
         res.send(filmMap);
     });
     // res.json("films");
