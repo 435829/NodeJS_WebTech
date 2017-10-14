@@ -11,12 +11,12 @@ var Schema = mongoose.Schema;
 //USER ROUTER
 var userRouter = require('./userRouter.js');
 app.use('/api/users/', userRouter.router);
-//RATING ROUTER
-var ratingRouter = require('./ratingRouter.js');
-app.use('/api/ratings/', ratingRouter);
 //FILM ROUTER
 var filmRouter = require('./filmRouter.js');
 app.use('/api/films/', filmRouter);
+//RATING ROUTER
+var ratingRouter = require('./ratingRouter.js');
+app.use('/api/ratings/', ratingRouter.router);
 //AUTHENTICATION ROUTER
 var authRouter = require('./authentication');
 app.use('/api/login', authRouter);
@@ -29,12 +29,18 @@ var options = {
     reconnectTries: 30
 };
 
+/**
+ * Als er geen api call word gedaan komt er welkom op notflix te staan (get request)
+ */
 app.get('/', function (req, res) {
 
     res.status(200);
     res.send('Welcome to NotFlix');
 });
 
+/**
+ * Als er geen api call word gedaan komt er welkom op notflix te staan (post request)
+ */
 app.post('/', function (req, res) {
 
     res.status(200);
@@ -46,27 +52,14 @@ app.post('/', function (req, res) {
 var db = mongoose.connect(mongodbUri, options);
 console.log("test");
 {
-// // respond with "hello world" when a GET request is made to the homepage
-
-    app.get('/', function (req, res) {
-        res.send('Hello World!')
-    });
 
     app.listen(3000, function () {
         console.log('Example app listening on port 3000!')
     });
-//
-//
 
-//Film object aangemaakt met verschillende variabelen
-
-
-//User object aangemaakt met verschillende variabelen
-
-
-
-
-
+    /**
+     * Aanmaken van alle films en users die we gebruikt hebben (uitgecomment omdat de films en users anders elke keer aangemaakt werden)
+     */
     // var newFilm = new Film({
     //     imdb_nummer: 1234,
     //     titel: 'test',

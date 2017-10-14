@@ -17,10 +17,10 @@ User.prototype.checkPassword = function (user, password) {
     return user.wachtwoord === password;
 };
 
+/**
+ * Een post methode om een gebruiker te registreren
+ */
 router.post('/register', function (req, res) {
-
-    var exists = false;
-    var usersList = [];
 
     if (!req.body.username) {
         res.status(400).send('Username required');
@@ -51,6 +51,7 @@ router.post('/register', function (req, res) {
             }).save();
 
             res.status(201); //Created
+            res.send('created');
         } else {
             res.status(409).send('Username is already in use');
         }

@@ -2,7 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var router = express.Router();
 var Schema = mongoose.Schema;
-var ratingModule = require('./ratingRouter')
+var ratingModule = require('./ratingRouter');
 var Rating = ratingModule.Rating;
 
 var jwt = require('jsonwebtoken');
@@ -17,6 +17,9 @@ var film = new Schema({
 });
 var Film = mongoose.model('Film', film);
 
+/**
+ * Een get methode om alle films te laten zien
+ */
 router.get('/', function (req, res) {
     Film.find({}, function (err, films) {
         var i = 0;
@@ -34,6 +37,9 @@ router.get('/', function (req, res) {
     // res.json("films");
 });
 
+/**
+ * Een get methode om een film te laten zien die bij de meegegeven film titel hoort
+ */
 router.get('/:filmtitle', function (req, res) {
     var filmTitle = req.param('filmtitle');
     Film.findOne({titel: filmTitle}, function (err, film) {
@@ -47,6 +53,9 @@ router.get('/:filmtitle', function (req, res) {
 
 });
 
+/**
+ * Een get methode die alle ratings ophaalt die bij de meegegeven film titel horen
+ */
 router.get('/:filmtitle/ratings', function (req, res) {
     var filmTitle = req.param('filmtitle');
 
@@ -54,33 +63,32 @@ router.get('/:filmtitle/ratings', function (req, res) {
         if (!film) {
             res.status(404).send("film not found");
         } else {
-            var dec_token = req.headers['authorization'],
-                decoded;
+            var dec_token = req.headers['authorization'];
+                // decoded;
 
-            try {
-                decoded = jwt.verify(dec_token, 'super-secret-key');
-            } catch (e) {
-                return res.status(401).send('unauthorized');
+                jwt.verify(dec_token, 'super-secret-key', function (err, decoded) {
+                    if (err) {
+                        return res.status(401).send('unauthorized');
+                    } else {
+                        Rating.find({film_title: filmTitle}, function (err, ratings) {
+                            if (err) {
+                                res.status(401).send('Something went wrong');
+                            } else if (!ratings) {
+                                res.status(404).send('No ratings found');
+                            } else {
+                                var i = 0;
+                                var ratingMap = {};
+
+                                ratings.forEach(function (rating) {
+                                    ratingMap[i] = rating;
+                                    i++;
+                                });
+                                res.status(200).send(ratingMap);
+                            }
+                        })
+                    }
+                });
             }
-            var username = decoded.username;
-
-            Rating.find({username: username, film_title: filmTitle}, function (err, ratings) {
-                if (err) {
-                    res.status(401).send('Not authorized, you need to login first');
-                } else if (!ratings) {
-                    res.status(404).send('No ratings found');
-                } else {
-                    var i = 0;
-                    var ratingMap = {};
-
-                    ratings.forEach(function (rating) {
-                        ratingMap[i] = rating;
-                        i++;
-                    });
-                    res.status(200).send(ratingMap);
-                }
-            })
-        }
     });
 
 });

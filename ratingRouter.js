@@ -21,7 +21,9 @@ var rating = new Schema({
 
 var Rating = mongoose.model('Rating', rating);
 
-
+/**
+ * Een get methode om alle ratings te laten zien van de ingelogde persoon aan de hand van de token
+ */
 router.get('/', function (req, res) {
     console.log("Show all users ratings");
     var dec_token = req.headers['authorization'],
@@ -37,7 +39,7 @@ router.get('/', function (req, res) {
     Rating.find({username: username}, function (err, ratings) {
         if (err) {
             res.status(401).send('Not authorized, you need to login first');
-        } else if(!ratings) {
+        } else if(ratings.length === 0) {
                 res.status(404).send('No ratings found');
         }else{
             var i = 0;
@@ -52,6 +54,10 @@ router.get('/', function (req, res) {
     })
 });
 
+/**
+ * Een post om films te kunnen raten.
+ * De username word automatisch toegevoegd aan de hand van de token van de ingelogde persoon
+ */
 router.post('/rate/', function (req, res) {
     //Controleer of er een filmtitel ingevuld is
     if (!req.body.filmTitle) {
@@ -88,12 +94,12 @@ router.post('/rate/', function (req, res) {
                 username: decoded.username,
                 film_title: req.body.filmTitle
             });
-            newRating.save()
+            newRating.save();
             res.status(200).send('Rating added');
         }
     })
 
 
 });
-module.exports = router;
 module.exports.Rating = Rating;
+module.exports.router = router;
