@@ -54,6 +54,7 @@ var User = require('./userRouter');
 // //     // res.json('Something went wrong')
 // // });
 
+// https://jwt.io/introduction/
 router.post('/authenticate/', function (req, res) {
     //Controleer of er een username ingevuld is
 if (!req.body.username){
