@@ -29,9 +29,16 @@ var options = {
     reconnectTries: 30
 };
 
-app.get('/api/users', function (req, res) {
+app.get('/', function (req, res) {
 
-    console.log('show all users');
+    res.status(200);
+    res.send('Welcome to NotFlix');
+});
+
+app.post('/', function (req, res) {
+
+    res.status(200);
+    res.send('Welcome to NotFlix');
 });
 
 //db.on db.once(hier alle code in), op internet kijken

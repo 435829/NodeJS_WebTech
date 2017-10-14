@@ -1,6 +1,19 @@
 /**
  * Created by bolin on 14-10-2017.
  */
+describe('homepage',function () {
+    describe('show homepage', function () {
+        var url = 'localhost:3000/';
+
+        it("returns status 200", function (done) {
+            request(url, function (error, response, body) {
+                expect(response.statusCode).to.equal(200);
+                done();
+            })
+        })
+    })
+});
+
 describe('Show Users API', function () {
     describe('Show all users', function () {
         var url = 'localhost:3000/api/users/';
@@ -38,7 +51,7 @@ describe('Show Films API', function () {
     });
 
     describe('Show 1 film', function () {
-        var url = 'localhost:3000/api/films/1234';
+        var url = 'localhost:3000/api/films/test123';
 
         it("returns status 200", function (done) {
             request(url, function (error, response, body) {
@@ -72,3 +85,4 @@ describe('Account',function () {
         })
     })
 });
+
