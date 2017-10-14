@@ -11,7 +11,6 @@ var jwt = require('jsonwebtoken');
 
 var filmModule = require('./filmRouter')
 var Film = filmModule.Film;
-var filmRouter = filmModule.router;
 var Schema = mongoose.Schema;
 
 var rating = new Schema({
@@ -97,3 +96,4 @@ router.post('/rate/', function (req, res) {
 
 });
 module.exports = router;
+module.exports.Rating = Rating;

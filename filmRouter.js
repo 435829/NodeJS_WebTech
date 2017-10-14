@@ -1,8 +1,12 @@
 var express = require('express');
-var
-    mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose');
 var router = express.Router();
+var Schema = mongoose.Schema;
+var ratingModule = require('./ratingRouter')
+var Rating = ratingModule.Rating;
+
+var jwt = require('jsonwebtoken');
+
 var film = new Schema({
     imdb_number: Number,
     titel: String,
@@ -19,7 +23,7 @@ router.get('/', function (req, res) {
 
         var filmMap = {};
 
-        films.forEach(function(film) {
+        films.forEach(function (film) {
             filmMap[i] = film;
             i++;
         });
@@ -28,28 +32,58 @@ router.get('/', function (req, res) {
         res.send(filmMap);
     });
     // res.json("films");
-
 });
 
 router.get('/:filmtitle', function (req, res) {
     var filmTitle = req.param('filmtitle');
-    Film.find({titel: filmTitle}, function (err, films) {
-        var i = 0;
-
-        var filmMap = {};
-
-        films.forEach(function(film) {
-            filmMap[i] = film;
-            i++;
-        });
-
+    Film.findOne({titel: filmTitle}, function (err, film) {
+        if (!film) {
+            res.status(404).send("film not found");
+        }
         res.status(200);
-        res.send(filmMap);
+        res.send(film);
     });
     // res.json("films");
 
 });
 
+router.get('/:filmtitle/ratings', function (req, res) {
+    var filmTitle = req.param('filmtitle');
+
+    Film.findOne({titel: filmTitle}, function (err, film) {
+        if (!film) {
+            res.status(404).send("film not found");
+        } else {
+            var dec_token = req.headers['authorization'],
+                decoded;
+
+            try {
+                decoded = jwt.verify(dec_token, 'super-secret-key');
+            } catch (e) {
+                return res.status(401).send('unauthorized');
+            }
+            var username = decoded.username;
+
+            Rating.find({username: username, film_title: filmTitle}, function (err, ratings) {
+                if (err) {
+                    res.status(401).send('Not authorized, you need to login first');
+                } else if (!ratings) {
+                    res.status(404).send('No ratings found');
+                } else {
+                    var i = 0;
+                    var ratingMap = {};
+
+                    ratings.forEach(function (rating) {
+                        ratingMap[i] = rating;
+                        i++;
+                    });
+                    res.status(200).send(ratingMap);
+                }
+            })
+        }
+    });
+
+});
 
 
 module.exports = router;
