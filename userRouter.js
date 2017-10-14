@@ -19,7 +19,7 @@ var user = new Schema({
 var User = mongoose.model('User', user);
 
 
-User.prototype.checkPassword = function (username, password) {
+User.prototype.checkPassword = function (user, password) {
     return user.password == password;
 };
 
