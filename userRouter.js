@@ -1,5 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
 var Schema = mongoose.Schema;
 var router = express.Router();
 var user = new Schema({
@@ -17,38 +18,53 @@ User.prototype.checkPassword = function (user, password) {
 };
 
 router.get('/:usernameR', function (req, res) {
-    var usernameRequest = req.param('usernameR');
+    // verify a token symmetric
+    var token = req.headers['authorization'];
+    jwt.verify(token, 'super-secret-key', function(err, decoded) {
+        if (err) {
+            res.status(401).send('Not authorized, you need to login first');
+        } else {
 
-    User.find({username: usernameRequest}, function (err, users) {
-        var i = 0;
-        var userMap = {};
+            var usernameRequest = req.param('usernameR');
 
-        users.forEach(function(user) {
-            userMap[i] = user;
-            i++;
-        });
+            User.find({username: usernameRequest}, function (err, users) {
+                var i = 0;
+                var userMap = {};
 
-        res.send(userMap);
+                users.forEach(function(user) {
+                    userMap[i] = user;
+                    i++;
+                });
+
+                res.send(userMap);
+            });
+            }
     });
     // res.json("users");
 
 });
 
 router.get('/', function (req, res) {
-    User.find({}, function (err, users) {
-        var i = 0;
+    var token = req.headers['authorization'];
+    jwt.verify(token, 'super-secret-key', function(err, decoded) {
+        if (err) {
+            res.status(401).send('Not authorized, you need to login first');
+        } else {
+            User.find({}, function (err, users) {
+                var i = 0;
 
-        var userMap = {};
+                var userMap = {};
 
-        users.forEach(function(user) {
-            userMap[i] = user;
-            i++;
-        });
+                users.forEach(function (user) {
+                    userMap[i] = user;
+                    i++;
+                });
 
-        res.send(userMap);
+                res.send(userMap);
+            });
+            // res.json("users");
+        }
     });
-    // res.json("users");
-
 });
 
 
