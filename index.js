@@ -64,13 +64,7 @@ console.log("test");
 //User object aangemaakt met verschillende variabelen
 
 
-    var rating = new Schema({
-        sterren: Number,
-        username: String,
-        imdb_number: Number
-    });
 
-    var Rating = mongoose.model('Rating', rating);
 
 
     // var newFilm = new Film({

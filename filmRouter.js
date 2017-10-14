@@ -31,9 +31,9 @@ router.get('/', function (req, res) {
 
 });
 
-router.get('/:IMDB', function (req, res) {
-    var imdbReq = req.param('IMDB');
-    Film.find({imdb_number: imdbReq}, function (err, films) {
+router.get('/:filmtitle', function (req, res) {
+    var filmTitle = req.param('filmtitle');
+    Film.find({titel: filmTitle}, function (err, films) {
         var i = 0;
 
         var filmMap = {};
@@ -53,3 +53,4 @@ router.get('/:IMDB', function (req, res) {
 
 
 module.exports = router;
+module.exports.Film = Film;
