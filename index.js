@@ -6,6 +6,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(express.static('static'));
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 //USER ROUTER
