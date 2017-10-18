@@ -64,13 +64,15 @@ router.get('/:filmtitle/ratings', function (req, res) {
             res.status(404).send("film not found");
         } else {
             var dec_token = req.headers['authorization'];
-                // decoded;
 
+            try {
                 jwt.verify(dec_token, 'super-secret-key', function (err, decoded) {
                     if (err) {
                         return res.status(401).send('unauthorized');
                     } else {
-                        Rating.find({film_title: filmTitle}, function (err, ratings) {
+                        var username = decoded.username;
+
+                        Rating.find({username: username, film_title: filmTitle}, function (err, ratings) {
                             if (err) {
                                 res.status(401).send('Something went wrong');
                             } else if (!ratings) {
@@ -88,11 +90,63 @@ router.get('/:filmtitle/ratings', function (req, res) {
                         })
                     }
                 });
+            } catch (e) {
+                return res.status(401).send('unauthorized');
             }
+            // var dec_token = req.headers['authorization'];
+            // decoded;
+        }
     });
 
 });
 
+/**
+ * Een post om films te kunnen raten.
+ * De username word automatisch toegevoegd aan de hand van de token van de ingelogde persoon
+ */
+router.post('/rate/', function (req, res) {
+    //Controleer of er een filmtitel ingevuld is
+    if (!req.body.filmTitle) {
+        res.status(400).send('Film title required');
+        return;
+    }
+//Controleer of er een rating is ingevuld
+    if (!req.body.rating) {
+        res.status(400).send('Rating required');
+        return;
+    }
 
-module.exports = router;
+    if ((req.body.rating % 0.5) !== 0) {
+        res.status(400).send('Invalid rating');
+        return;
+    }
+
+    Film.findOne({titel: req.body.filmTitle}, function (err, film) {
+        if (!film) {
+            res.status(404).send('Film not found');
+        } else {
+            var dec_token = req.headers['authorization'],
+                decoded;
+
+            try {
+                decoded = jwt.verify(dec_token, 'super-secret-key');
+            } catch (e) {
+                return res.status(401).send('unauthorized');
+            }
+            // var username = decoded.username;
+
+            var newRating = new Rating({
+                sterren: req.body.rating,
+                username: decoded.username,
+                film_title: req.body.filmTitle
+            });
+            newRating.save();
+            res.status(200).send('Rating added');
+        }
+    })
+
+
+});
+
 module.exports.Film = Film;
+module.exports.router = router;

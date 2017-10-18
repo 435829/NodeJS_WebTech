@@ -80,7 +80,7 @@ router.get('/:usernameR', function (req, res) {
                 res.status(200);
                 res.send(userMap);
             });
-            }
+        }
     });
     // res.json("users");
 
