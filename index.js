@@ -30,6 +30,7 @@ var options = {
     reconnectTries: 30
 };
 
+
 /**
  * Als er geen api call word gedaan komt er welkom op notflix te staan (get request)
  */
