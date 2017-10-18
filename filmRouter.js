@@ -24,7 +24,7 @@ router.get('/', function (req, res) {
     Film.find({}, function (err, films) {
         var i = 0;
 
-        var filmMap = {};
+        var filmMap = [];
 
         films.forEach(function (film) {
             filmMap[i] = film;
@@ -79,7 +79,7 @@ router.get('/:filmtitle/ratings', function (req, res) {
                                 res.status(404).send('No ratings found');
                             } else {
                                 var i = 0;
-                                var ratingMap = {};
+                                var ratingMap = [];
 
                                 ratings.forEach(function (rating) {
                                     ratingMap[i] = rating;

@@ -70,7 +70,7 @@ router.get('/:usernameR', function (req, res) {
 
             User.find({username: usernameRequest}, function (err, users) {
                 var i = 0;
-                var userMap = {};
+                var userMap = [];
 
                 users.forEach(function(user) {
                     userMap[i] = user;
@@ -95,7 +95,7 @@ router.get('/', function (req, res) {
             User.find({}, function (err, users) {
                 var i = 0;
 
-                var userMap = {};
+                var userMap = [];
 
                 users.forEach(function (user) {
                     userMap[i] = user;

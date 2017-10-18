@@ -21,7 +21,7 @@ var rating = new Schema({
 
 var id = new Schema({
     $oid: String
-})
+});
 
 var Rating = mongoose.model('Rating', rating);
 var ID = mongoose.model('ID', id);
@@ -48,7 +48,7 @@ router.get('/', function (req, res) {
             res.status(404).send('No ratings found');
         } else {
             var i = 0;
-            var ratingMap = {};
+            var ratingMap = [];
 
             ratings.forEach(function (rating) {
                 ratingMap[i] = rating;
