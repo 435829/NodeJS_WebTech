@@ -148,5 +148,50 @@ router.post('/rate/', function (req, res) {
 
 });
 
+router.get('/:filmtitle/averageRating', function (req, res) {
+
+    var filmTitle = req.param('filmtitle');
+
+    Film.findOne({titel: filmTitle}, function (err, film) {
+        if (!film) {
+            res.status(404).send("film not found");
+        } else {
+            try {
+                    if (err) {
+                    } else {
+
+                        Rating.find({film_title: filmTitle}, function (err, ratings) {
+                            if (err) {
+                                res.status(401).send('Something went wrong');
+                            } else if (!ratings) {
+                                res.status(404).send('No ratings found');
+                            } else {
+                                var i = 0;
+                                var j = 0;
+                                var ratingMap = [];
+                                var averageRating = [];
+                                var ratingsAdded = 0;
+
+                                ratings.forEach(function (rating) {
+                                    ratingMap[i] = rating.sterren;
+                                    i++;
+
+                                });
+                                ratingMap.forEach(function () {
+                                    ratingsAdded = ratingsAdded + ratingMap[j];
+                                    j++;
+                                });
+                                averageRating[0] = Math.round(ratingsAdded / j);
+                                res.status(200).send(averageRating);
+                            }
+                        })
+                    }
+            } catch (e){
+
+            }
+        }
+    });
+});
+
 module.exports.Film = Film;
 module.exports.router = router;
