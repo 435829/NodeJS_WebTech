@@ -41,7 +41,7 @@ router.post('/register', function (req, res) {
     }
 
     User.findOne({username: req.body.username}, function (err, user) {
-        if (!user){
+        if (!user) {
             new User({
                 achternaam: req.body.achternaam,
                 tussenvoegsels: req.body.tussenvoegsel,
@@ -61,24 +61,15 @@ router.post('/register', function (req, res) {
 router.get('/:usernameR', function (req, res) {
     // verify a token symmetric
     var token = req.headers['authorization'];
-    jwt.verify(token, 'super-secret-key', function(err, decoded) {
+    jwt.verify(token, 'super-secret-key', function (err, decoded) {
         if (err) {
             res.status(401).send('Not authorized, you need to login first');
         } else {
-
             var usernameRequest = req.param('usernameR');
 
-            User.find({username: usernameRequest}, function (err, users) {
-                var i = 0;
-                var userMap = [];
-
-                users.forEach(function(user) {
-                    userMap[i] = user;
-                    i++;
-                });
-
+            User.findOne({username: usernameRequest}, function (err, user) {
                 res.status(200);
-                res.send(userMap);
+                res.send(user);
             });
         }
     });
@@ -88,7 +79,7 @@ router.get('/:usernameR', function (req, res) {
 
 router.get('/', function (req, res) {
     var token = req.headers['authorization'];
-    jwt.verify(token, 'super-secret-key', function(err, decoded) {
+    jwt.verify(token, 'super-secret-key', function (err, decoded) {
         if (err) {
             res.status(401).send('Not authorized, you need to login first');
         } else {
