@@ -2,7 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var Schema = mongoose.Schema;
-var router = express.Router();
+var Router = express.Router();
 var user = new Schema({
     achternaam: String,
     tussenvoegsels: String,
@@ -11,8 +11,21 @@ var user = new Schema({
     wachtwoord: String
 });
 
+
 var User = mongoose.model('User', user);
 
+
+module.exports.Router = Router;
+module.exports.User = User;
+
+//============================================================================
+
+/**
+ * Password controle
+ * @param user gebruiker
+ * @param password wachtwoord
+ * @returns {boolean} correct of incorrect
+ */
 User.prototype.checkPassword = function (user, password) {
     return user.wachtwoord === password;
 };
@@ -20,7 +33,7 @@ User.prototype.checkPassword = function (user, password) {
 /**
  * Een post methode om een gebruiker te registreren
  */
-router.post('/register', function (req, res) {
+Router.post('/register', function (req, res) {
 
     if (!req.body.username) {
         res.status(400).send('Username required');
@@ -58,7 +71,7 @@ router.post('/register', function (req, res) {
     });
 });
 
-router.get('/:usernameR', function (req, res) {
+Router.get('/:usernameR', function (req, res) {
     // verify a token symmetric
     var token = req.headers['authorization'];
     jwt.verify(token, 'super-secret-key', function (err, decoded) {
@@ -77,7 +90,7 @@ router.get('/:usernameR', function (req, res) {
 
 });
 
-router.get('/', function (req, res) {
+Router.get('/', function (req, res) {
     var token = req.headers['authorization'];
     jwt.verify(token, 'super-secret-key', function (err, decoded) {
         if (err) {
@@ -101,6 +114,3 @@ router.get('/', function (req, res) {
     });
 });
 
-
-module.exports.router = router;
-module.exports.User = User;

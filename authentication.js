@@ -8,7 +8,7 @@ var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 var myModule = require('./userRouter');
 var User = myModule.User;
-var userRouter = myModule.router;
+var userRouter = myModule.Router;
 var router = express.Router();
 
 // app.use(bodyParser.json);

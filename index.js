@@ -14,11 +14,11 @@ var userRouter = require('./userRouter.js');
 var filmRouter = require('./filmRouter.js');
 var ratingRouter = require('./ratingRouter.js');
 var authRouter = require('./authentication');
-app.use('/api/users/', userRouter.router);
+app.use('/api/users/', userRouter.Router);
 //FILM ROUTER
-app.use('/api/films/', filmRouter.router);
+app.use('/api/films/', filmRouter.Router);
 //RATING ROUTER
-app.use('/api/ratings/', ratingRouter.router);
+app.use('/api/ratings/', ratingRouter.Router);
 //AUTHENTICATION ROUTER
 app.use('/api/login', authRouter);
 
