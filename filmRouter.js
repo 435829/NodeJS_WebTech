@@ -167,16 +167,18 @@ router.get('/:filmtitle/averageRating', function (req, res) {
                                 res.status(404).send('No ratings found');
                             } else {
                                 var i = 0;
-                                var j = 0;
                                 var ratingMap = [];
-                                var averageRating = [];
-                                var ratingsAdded = 0;
 
                                 ratings.forEach(function (rating) {
                                     ratingMap[i] = rating.sterren;
                                     i++;
 
                                 });
+
+                                var j = 0;
+                                var averageRating = [];
+                                var ratingsAdded = 0;
+
                                 ratingMap.forEach(function () {
                                     ratingsAdded = ratingsAdded + ratingMap[j];
                                     j++;
