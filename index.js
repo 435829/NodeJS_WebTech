@@ -10,10 +10,10 @@ app.use(express.static('static'));
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 //USER ROUTER
-var userRouter = require('./userRouter.js');
-var filmRouter = require('./filmRouter.js');
-var ratingRouter = require('./ratingRouter.js');
-var authRouter = require('./authentication');
+var userRouter = require('./routing/userRouter.js');
+var filmRouter = require('./routing/filmRouter.js');
+var ratingRouter = require('./routing/ratingRouter.js');
+var authRouter = require('./routing/authentication');
 app.use('/api/users/', userRouter.Router);
 //FILM ROUTER
 app.use('/api/films/', filmRouter.Router);
@@ -201,7 +201,7 @@ console.log("test");
     //     wachtwoord: 'lappie'
     // });
     // newUser10.save();
-
+    module.exports = app;
 }
 
 

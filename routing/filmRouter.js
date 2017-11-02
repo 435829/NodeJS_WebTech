@@ -14,6 +14,16 @@ var film = new Schema({
 
 var Film = mongoose.model('Film', film);
 
+var filmWithRating = new Schema({
+    titel: String,
+    datum: String,
+    lengte: Number,
+    regisseur: String,
+    beschrijving: String,
+    gem_beoordeling: Number
+});
+var FilmWithRating = mongoose.model('FilmWithRating', filmWithRating);
+
 
 var ratingModule = require('./ratingRouter');
 var Rating = ratingModule.Rating;
@@ -28,17 +38,47 @@ module.exports.Film = Film;
  */
 Router.get('/', function (req, res) {
     Film.find({}, function (err, films) {
-        var i = 0;
-
         var filmMap = [];
-
+        var i = 0;
         films.forEach(function (film) {
-            filmMap[i] = film;
+            var avgRating = 0;
+            var fwr;
+            var j = i;
+            Rating.find({film_title: film.titel}, function (err, ratings) {
+                if (err) {
+                } else if (!ratings) {
+                    res.status(404);
+                } else {
+                    var totalRating = 0;
+                    var amountOfRatings = 0;
+                    ratings.forEach(function (rating) {
+                        totalRating += rating.sterren;
+                        amountOfRatings++;
+                    });
+                    if (amountOfRatings > 0) {
+                        avgRating = totalRating / amountOfRatings;
+                    }
+                    fwr = new FilmWithRating({
+                        titel: film.titel,
+                        datum: film.datum,
+                        lengte: film.lengte,
+                        regisseur: film.regisseur,
+                        beschrijving: film.beschrijving,
+                        gem_beoordeling: Math.round(avgRating, 0)
+                    });
+                    filmMap[j] = fwr;
+                    if (j === (i - 1)) {
+                        res.send(filmMap);
+                        res.status(200);
+                    }
+                }
+            });
             i++;
         });
 
-        res.status(200);
-        res.send(filmMap);
+        // res.send(filmMap);
+
+
     });
     // res.json("films");
 });
@@ -51,9 +91,10 @@ Router.get('/:filmtitle', function (req, res) {
     Film.findOne({titel: filmTitle}, function (err, film) {
         if (!film) {
             res.status(404).send("film not found");
+        } else {
+            res.status(200);
+            res.send(film);
         }
-        res.status(200);
-        res.send(film);
     });
     // res.json("films");
 
@@ -67,7 +108,7 @@ Router.get('/:filmtitle/ratings', function (req, res) {
 
     Film.findOne({titel: filmTitle}, function (err, film) {
         if (!film) {
-            res.status(404).send("film not found");
+            res.status(404).send("film not found - /filmtitle/ratings");
         } else {
             var dec_token = req.headers['authorization'];
 
@@ -81,7 +122,7 @@ Router.get('/:filmtitle/ratings', function (req, res) {
                         Rating.find({username: username, film_title: filmTitle}, function (err, ratings) {
                             if (err) {
                                 res.status(401).send('Something went wrong');
-                            } else if (!ratings) {
+                            } else if (!ratings || ratings === '') {
                                 res.status(404).send('No ratings found');
                             } else {
                                 var i = 0;
@@ -105,6 +146,7 @@ Router.get('/:filmtitle/ratings', function (req, res) {
     });
 
 });
+
 
 Router.get('/:filmtitle/averageRating', function (req, res) {
 
@@ -152,5 +194,7 @@ Router.get('/:filmtitle/averageRating', function (req, res) {
         }
     });
 });
+
+
 
 

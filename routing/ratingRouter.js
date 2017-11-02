@@ -9,8 +9,9 @@ var userRouter = userModule.Router;
 var jwt = require('jsonwebtoken');
 
 
-var filmModule = require('./filmRouter');
-var Film = filmModule.Film;
+// var filmModule = require('./filmRouter');
+// var Film = filmModule.Film;
+var Film = mongoose.model('Film');
 
 
 var rating = new Schema({
@@ -31,7 +32,6 @@ var ID = mongoose.model('ID', id);
  * Een get methode om alle ratings te laten zien van de ingelogde persoon aan de hand van de token
  */
 Router.get('/', function (req, res) {
-    console.log("Show all users ratings");
     var dec_token = req.headers['authorization'],
         decoded;
 
