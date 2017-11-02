@@ -81,8 +81,13 @@ Router.get('/:usernameR', function (req, res) {
             var usernameRequest = req.param('usernameR');
 
             User.findOne({username: usernameRequest}, function (err, user) {
-                res.status(200);
-                res.send(user);
+                if (!user) {
+                    res.status(404).send('User not found');
+                } else {
+                    res.status(200);
+                    res.send(user);
+                }
+
             });
         }
     });
