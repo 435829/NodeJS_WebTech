@@ -6,9 +6,6 @@ function login() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
     var apiURL = "http://localhost:3000/api/login/authenticate/";
-    alert(apiURL);
-
-    // alert(username + password);
 
     $.ajax({
         url: apiURL,
@@ -21,9 +18,8 @@ function login() {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (jsonData) {
-            alert(jsonData);
+            alert("U bent ingelogd");
             sessionStorage.setItem("token", jsonData);
-            alert(sessionStorage.getItem("token"));
         },
         error: function (res) {
             alert(apiURL);

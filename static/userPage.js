@@ -25,8 +25,16 @@ function loadUsers() {
 }
 
 function showUsers(userData) {
+
+    var table = $('<table></table>');
+
     for (var i = 0; i < userData.length; i++) {
-        alert(userData[i]);
         //TODO users op pagina zetten in mooi tabelletje
+        var row = $('<tr></tr>').addClass('bar').text("<td>" + userData[i].voornaam + "</td>" +
+            "<td>" + userData[i].tussenvoegsels + "</td>" +
+            "<td>" + userData[i].achternaam + "</td>" +
+            "<td>" + userData[i].username + "</td>");
+        table.append(row);
     }
+    $('#row_users_table').append(table);
 }

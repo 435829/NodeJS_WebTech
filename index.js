@@ -113,12 +113,12 @@ console.log("test");
     //
     //
     // var newUser1 = new User({
-    //     achternaam: 'Storm',
-    //     tussenvoegsels: 'van',
-    //     voornaam: 'Robert',
-    //     username: 'RobertStorm',
-    //     wachtwoord: 'test12'
-    // });
+    //         achternaam: 'Storm',
+    //         tussenvoegsels: 'van',
+    //         voornaam: 'Robert',
+    //         username: 'RobertStorm',
+    //         wachtwoord: 'test12'
+    //     });
     // newUser1.save();
     //
     // var newUser2 = new User({
