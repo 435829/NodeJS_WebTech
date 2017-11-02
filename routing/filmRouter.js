@@ -39,35 +39,50 @@ module.exports.Film = Film;
 Router.get('/', function (req, res) {
     Film.find({}, function (err, films) {
         var filmMap = [];
+        var supposedFilmMapPosSum = 0;
+        var z = 0;
+        var currentFilmMapPosSum = 0;
+        films.forEach(function (err) {
+                supposedFilmMapPosSum += z;
+                z++;
+            }
+        );
         var i = 0;
         films.forEach(function (film) {
             var avgRating = 0;
-            var fwr;
             var j = i;
             Rating.find({film_title: film.titel}, function (err, ratings) {
                 if (err) {
                 } else if (!ratings) {
                     res.status(404);
+                    console.log("HIEROEROEORER")
                 } else {
-                    var totalRating = 0;
-                    var amountOfRatings = 0;
-                    ratings.forEach(function (rating) {
-                        totalRating += rating.sterren;
-                        amountOfRatings++;
-                    });
-                    if (amountOfRatings > 0) {
-                        avgRating = totalRating / amountOfRatings;
-                    }
-                    fwr = new FilmWithRating({
-                        titel: film.titel,
-                        datum: film.datum,
-                        lengte: film.lengte,
-                        regisseur: film.regisseur,
-                        beschrijving: film.beschrijving,
-                        gem_beoordeling: Math.round(avgRating, 0)
-                    });
-                    filmMap[j] = fwr;
-                    if (j === (i - 1)) {
+                    console.log(j);
+                    var fwr;
+                    do {
+                        var totalRating = 0;
+                        var amountOfRatings = 0;
+                        ratings.forEach(function (rating) {
+                            totalRating += rating.sterren;
+                            amountOfRatings++;
+                        });
+                        if (amountOfRatings > 0) {
+                            avgRating = totalRating / amountOfRatings;
+                        }
+                        fwr = new FilmWithRating({
+                            titel: film.titel,
+                            datum: film.datum,
+                            lengte: film.lengte,
+                            regisseur: film.regisseur,
+                            beschrijving: film.beschrijving,
+                            gem_beoordeling: Math.round(avgRating, 0)
+                        });
+                        console.log(fwr);
+                        filmMap[j] = fwr;
+                        console.log(filmMap[j]);
+                    } while (filmMap[j] === null);
+                    currentFilmMapPosSum += j;
+                    if (currentFilmMapPosSum === supposedFilmMapPosSum) {
                         res.send(filmMap);
                         res.status(200);
                     }
