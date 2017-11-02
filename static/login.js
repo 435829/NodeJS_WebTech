@@ -18,12 +18,13 @@ function login() {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (jsonData) {
-            alert("U bent ingelogd");
             sessionStorage.setItem("token", jsonData);
+            window.location.href = "http://localhost:3000/index.html" ;
+            alert("U bent ingelogd");
         },
-        error: function (res) {
-            alert(apiURL);
-            console.log(res);
+        error: function () {
+            window.location.href = "http://localhost:3000/login.html" ;
+            alert("Verkeerde gebruikersnaam/wachtwoord combinatie")
         }
     });
 }
@@ -51,10 +52,11 @@ function register() {
         contentType: 'application/json; charset=utf-8',
         success: function () {
             alert("U bent geregistreerd");
+            window.location.href = "http://localhost:3000/index.html" ;
         },
-        error: function (res) {
-            alert(res);
-            console.log(res);
+        error: function () {
+            window.location.href = "http://localhost:3000/register.html" ;
+            alert("Niet alle velden zijn ingevuld");
         }
 
     })
