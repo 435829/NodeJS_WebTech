@@ -19,6 +19,7 @@ function login() {
         contentType: 'application/json; charset=utf-8',
         success: function (jsonData) {
             sessionStorage.setItem("token", jsonData);
+            sessionStorage.setItem("username", username);
             window.location.href = "http://localhost:3000/index.html" ;
             alert("U bent ingelogd");
         },

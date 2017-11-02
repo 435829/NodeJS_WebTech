@@ -11,6 +11,7 @@ function loadFilms() {
         success: function (jsonData) {
             jsonData.forEach(function (film) {
                 var ratingString = "";
+                alert(film);
                 var rating = film.gem_beoordeling;
                 var fullStar = '&#9733; ';
                 var emptyStar = '&#9734; ';

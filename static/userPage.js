@@ -1,12 +1,13 @@
 /**
- * Created by bolin on 1-11-2017.
+ * Created by bolin on 2-11-2017.
  */
 
-function loadUsers() {
+function loadUserInfo() {
     var token = sessionStorage.getItem("token");
+    var username = sessionStorage.getItem("username");
 
     $.ajax({
-        url: "http://localhost:3000/api/users/",
+        url: "http://localhost:3000/api/users/" + username,
         type: "GET",
 
         headers: {
@@ -14,43 +15,35 @@ function loadUsers() {
         },
         contentType: 'application/json; charset=utf-8',
         success: function (jsonData) {
-            showUsers(jsonData)
+            showSingleUser(jsonData, username)
         },
         error: function (res) {
+            setErrorMessage();
             console.log(res);
         }
     });
-
 }
 
-function showUsers(userData) {
+function showSingleUser(userData, username) {
+    var table_div = $("#single_user");
+    var username_h3 = $("#username_single");
 
-    var table_div = $("#users_table");
+    username_h3.prepend("<h3>" + username + "</h3>");
 
-    var htmlString = '<table><tr><th>Achternaam</th><th>Voornaam</th><th>Gebruikersnaam</th></tr>';
+    table_div.prepend($("<table>" +
+        "<tr>" +
+        "<th>Voornaam</th>" +
+        "<td>" + userData.voornaam + "</td>" +
+        "</tr>" +
+        "<tr>" +
+        "<th>Achternaam</th>" +
+        "<td>" + userData.achternaam + "</td>" +
+        "</tr>" +
+        "</table>"))
+}
 
-    var pos = 0;
-    userData.forEach(function () {
-        var lastName = userData[pos].achternaam;
-        if (userData[pos].tussenvoegsels && userData[pos].tussenvoegsels !== 'niks') {
-            lastName += ", " + userData[pos].tussenvoegsels;
-        }
-        htmlString += '<tr><td>' + lastName + '</td><td>' + userData[pos].voornaam + '</td><td>' + userData[pos].username + '</td></tr>';
-        pos++;
-    });
-    htmlString += '</table>';
-    table_div.prepend($(htmlString));
+function setErrorMessage(){
+    var errorMessageDiv = $("#error_message");
 
-
-    // var table = $('<table></table>');
-
-    // for (var i = 0; i < userData.length; i++) {
-    //     //TODO users op pagina zetten in mooi tabelletje
-    //     var row = $('<tr></tr>').addClass('bar').text("<td>" + userData[i].voornaam + "</td>" +
-    //         "<td>" + userData[i].tussenvoegsels + "</td>" +
-    //         "<td>" + userData[i].achternaam + "</td>" +
-    //         "<td>" + userData[i].username + "</td>");
-    //     table.append(row);
-    // }
-    // $("#users_table").prepend(table);
+    errorMessageDiv.prepend("<div>Log in om deze pagina te kunnen bekijken</div>")
 }
