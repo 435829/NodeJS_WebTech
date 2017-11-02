@@ -57,7 +57,7 @@ Router.post('/register', function (req, res) {
         if (!user) {
             new User({
                 achternaam: req.body.achternaam,
-                tussenvoegsels: req.body.tussenvoegsel,
+                tussenvoegsels: req.body.tussenvoegsels,
                 voornaam: req.body.voornaam,
                 username: req.body.username,
                 wachtwoord: req.body.password
