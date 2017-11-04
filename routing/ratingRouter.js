@@ -89,8 +89,6 @@ Router.put('/:ratingID/edit', function (req, res) {
             }
         });
     }
-
-
 });
 
 Router.delete('/:ratingID/delete', function (req, res) {
