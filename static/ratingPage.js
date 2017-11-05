@@ -27,15 +27,15 @@ function loadRatings() {
 function showRatings(ratingData) {
     var table_div = $("#user_ratings");
 
-    var htmlString = '<table border = "1" cellpadding="5"><tr><th>Gebruikersnaam</th><th>Film</th><th>Aantal sterren</th><th></th><th></th></tr>';
+    var htmlString = '<table border = "1" style="border-color: white" cellpadding="5"><tr><th>Gebruikersnaam</th><th>Film</th><th>Aantal sterren</th><th></th><th></th></tr>';
 
     var pos = 0;
     ratingData.forEach(function () {
         htmlString += '<tr><td>' + ratingData[pos].username + '</td>' +
             '<td>' + ratingData[pos].film_title + '</td>' +
             '<td>' + ratingData[pos].sterren + '</td>' +
-            '<td onclick="deleteRating(\'' + ratingData[pos]._id + '\')">Verwijder</td>' +
-            '<td onclick="goToEditPage(\'' + ratingData[pos]._id + '\')">Wijzig</td></tr>';
+            '<td bgcolor="red" style="color: white" onclick="deleteRating(\'' + ratingData[pos]._id + '\')">Verwijder</td>' +
+            '<td bgcolor="#224172" style="color: white; margin-left: 10px" onclick="goToEditPage(\'' + ratingData[pos]._id + '\')">Wijzig</td></tr>';
         pos++;
     });
     htmlString += '</table>';
@@ -56,7 +56,7 @@ function deleteRating(ratingID) {
         contentType: 'application/json; charset=utf-8',
         success: function () {
             alert("Rating deleted");
-            window.location.href = "http://localhost:3000/ratingPage.html" ;
+            window.location.href = "http://localhost:3000/ratingPage.html";
         },
         error: function (res) {
             if (token === null) {
@@ -69,11 +69,11 @@ function deleteRating(ratingID) {
 
 function goToEditPage(ratingID) {
     sessionStorage.setItem("ratingIDToEdit", ratingID);
-    window.location.href = "http://localhost:3000/editRating.html" ;
+    window.location.href = "http://localhost:3000/editRating.html";
 }
 
 
-function setErrorMessage(){
+function setErrorMessage() {
     var errorMessageDiv = $("#error_message");
 
     errorMessageDiv.prepend("<div>Log in om deze pagina te kunnen bekijken</div>");

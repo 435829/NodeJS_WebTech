@@ -105,7 +105,7 @@ body {
     font-size: 1rem;
     font-weight: normal;
     line-height: 1.5;
-    color: #212529;
+    color: #224172;
     background-color: #fff;
 }
 
@@ -578,7 +578,7 @@ kbd {
     padding: 0.2rem 0.4rem;
     font-size: 90%;
     color: #fff;
-    background-color: #212529;
+    background-color: #224172;
     border-radius: 0.2rem;
 }
 
@@ -593,7 +593,7 @@ pre {
     margin-top: 0;
     margin-bottom: 1rem;
     font-size: 90%;
-    color: #212529;
+    color: #224172;
 }
 
 pre code {
@@ -1617,7 +1617,7 @@ pre code {
 
 .thead-inverse th {
     color: #fff;
-    background-color: #212529;
+    background-color: #224172;
 }
 
 .thead-default th {
@@ -1627,7 +1627,7 @@ pre code {
 
 .table-inverse {
     color: #fff;
-    background-color: #212529;
+    background-color: #224172;
 }
 
 .table-inverse th,
@@ -2704,7 +2704,7 @@ tbody.collapse.show {
     padding: 0.5rem 0;
     margin: 0.125rem 0 0;
     font-size: 1rem;
-    color: #212529;
+    color: #224172;
     text-align: left;
     list-style: none;
     background-color: #fff;
@@ -2726,7 +2726,7 @@ tbody.collapse.show {
     padding: 0.25rem 1.5rem;
     clear: both;
     font-weight: normal;
-    color: #212529;
+    color: #224172;
     text-align: inherit;
     white-space: nowrap;
     background: none;
@@ -4477,7 +4477,7 @@ tbody.collapse.show {
 }
 
 .list-group-item-action:active {
-    color: #212529;
+    color: #224172;
     background-color: #e9ecef;
 }
 
@@ -5175,7 +5175,7 @@ button.close {
 
 .popover-body {
     padding: 9px 14px;
-    color: #212529;
+    color: #224172;
 }
 
 .carousel {

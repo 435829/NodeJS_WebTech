@@ -55,9 +55,7 @@ Router.get('/', function (req, res) {
                 if (err) {
                 } else if (!ratings) {
                     res.status(404);
-                    console.log("HIEROEROEORER")
                 } else {
-                    console.log(j);
                     var fwr;
                     do {
                         var totalRating = 0;
@@ -107,8 +105,37 @@ Router.get('/:filmtitle', function (req, res) {
         if (!film) {
             res.status(404).send("film not found");
         } else {
-            res.status(200);
-            res.send(film);
+            var avgRating = 0;
+            Rating.find({film_title: film.titel}, function (err, ratings) {
+                if (err) {
+                } else if (!ratings) {
+                    res.status(404);
+                } else {
+                    var fwr;
+                    var totalRating = 0;
+                    var amountOfRatings = 0;
+                    ratings.forEach(function (rating) {
+                        totalRating += rating.sterren;
+                        amountOfRatings++;
+                    });
+                    if (amountOfRatings > 0) {
+                        avgRating = totalRating / amountOfRatings;
+                    }
+                    fwr = new FilmWithRating({
+                        titel: film.titel,
+                        datum: film.datum,
+                        lengte: film.lengte,
+                        regisseur: film.regisseur,
+                        beschrijving: film.beschrijving,
+                        gem_beoordeling: Math.round(avgRating, 0)
+                    });
+                    res.send(fwr);
+                    res.status(200);
+
+                }
+            });
+            // res.status(200);
+            // res.send(film);
         }
     });
     // res.json("films");
